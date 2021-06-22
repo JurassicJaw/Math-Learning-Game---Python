@@ -39,26 +39,13 @@ score = 0
 timer = False
 
 
-class Game_Questions:
-    def Questions():
-        print("questions!")
-    
 
-    def Answers():
-        ans = open("TestFile1.txt", "r")
-        line1 = ans.readline()
-        line2 = ans.readline()
-        line3 = ans.readline()
-        line4 = ans.readline()
-        line5 = ans.readline()
-        line6 = ans.readline()
-        print(line1)
-        print(line2)
-        print(line3)
-        print(line4)
-        print(line5)
-        print(line6)
-        ans.close()
+
+
+
+
+
+
 
 
 class Math_Game:
@@ -112,7 +99,7 @@ class Math_Game:
 
 
     def Difficulty_Menu():      #Loads Up The DIfficulty Menu
-        global CanvasImage, BackGround, BackImages, BackImages, diff
+        global CanvasImage, BackGround, BackImages, BackImages
 
         dict["canvas"] = canvas
         canvas.delete('all')
@@ -188,49 +175,43 @@ class Math_Game:
 
     def EasyToggle():           #Toggles Easy Mode
         global EasyDiff, MediumDiff, HardDiff
-        EasyDiff = 1
-        MediumDiff = 0
-        HardDiff = 0
+        diff = 1
 
         Math_Game.StoryMenu()
 
 
     def MediumToggle():         #Toggles Medium Mode
-        global EasyDiff, MediumDiff, HardDiff
-        EasyDiff = 0
-        MediumDiff = 1
-        HardDiff = 0
+        global diff
+        diff = 2
 
         Math_Game.StoryMenu()
 
 
     def HardToggle():           #Toggles Hard Mode
-        global EasyDiff, MediumDiff, HardDiff
-        EasyDiff = 0
-        MediumDiff = 0
-        HardDiff = 1
+        global diff
+        diff = 3
 
         Math_Game.StoryMenu()
 
 
     def StartGame():           #Starts The Game
-        global EasyDiff, MediumDiff, HardDiff, h, m, s, score, timer, timer_label, answers
+        global diff, h, m, s, score, timer, timer_label, answers
 
-        if EasyDiff == 1:
+        if diff == 1:
             s = 31
             m = 2
             h = 0
             Math_Game.TimerOn()
             Math_Game.Timer()
 
-        elif MediumDiff == 1:
+        elif diff == 2:
             s = 46
             m = 1
             h = 0
             Math_Game.TimerOn()
             Math_Game.Timer()
 
-        elif HardDiff == 1:
+        elif diff == 3:
             s = 1
             m = 1
             h = 0
@@ -262,8 +243,7 @@ class Math_Game:
             Answer_Button_One = Button(root,text=answers,highlightthickness = 0, bd= 0)
 
 
-
-
+        Game_Questions.Questions()
 
         dict["canvas"].pack()
         root.mainloop()
