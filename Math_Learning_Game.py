@@ -239,8 +239,7 @@ class Math_Game:
         Quit_canvas = canvas.create_window( 663, 727, anchor = "nw",window = Quit)
 
 
-        if BackImages == BackImages[3]:
-            Answer_Button_One = Button(root,text=answers,highlightthickness = 0, bd= 0)
+
 
 
         Game_Questions.Questions()
@@ -293,7 +292,7 @@ class Math_Game:
             elif s < 0:
                 s=0
                 timer=False
-                BackGround = PhotoImage(file = BackImages(9))
+                BackGround = PhotoImage(file = BackImages[9])
                 BackGround = BackGround.subsample(3)
                 CavnasImage = Label(root, image = BackGround)
                 CavnasImage.place(x = 0, y = 0)
@@ -355,7 +354,7 @@ class Math_Game:
         elif s < 0:
             s=0
             timer=False
-            BackGround = PhotoImage(file = BackImages(9))
+            BackGround = PhotoImage(file = BackImages[9])
             BackGround = BackGround.subsample(3)
             CavnasImage = Label(root, image = BackGround)
             CavnasImage.place(x = 0, y = 0)
@@ -400,7 +399,7 @@ class Math_Game:
         elif s < 0:
             s=0
             timer=False
-            BackGround = PhotoImage(file = BackImages(9))
+            BackGround = PhotoImage(file = BackImages[9])
             BackGround = BackGround.subsample(3)
             CavnasImage = Label(root, image = BackGround)
             CavnasImage.place(x = 0, y = 0)
