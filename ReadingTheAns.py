@@ -7,7 +7,7 @@ BackImages = ["G:\My Drive\Classroom\CDT301\Python Assesment\Math Learning Game\
             "G:\My Drive\Classroom\CDT301\Python Assesment\Math Learning Game\Layouts\Images\Game\PPM\Game#3.ppm"]
 
 
-RandomLevel = BackImages[random.randint(2,2)]
+RandomLevel = BackImages[random.randint(0,0)]
 
 
 dict = {"canvas":0}
@@ -21,7 +21,6 @@ operator_list.append("/")
 
 operator = operator_list[random.randint(0,3)]
 
-GameImage = BackImages
 
 
 class Game_Questions:
@@ -77,6 +76,10 @@ class Game_Questions:
             
             if randomNumberTwo == answer:
                 randomNumberTwo = int(answer) + random.randint(0,int(answer))
+            
+            if first_number == second_number:
+                first_number
+                second_number
 
 
         elif operator == "*":
@@ -85,9 +88,13 @@ class Game_Questions:
 
             question = first_number, operator, second_number
             answer = first_number * second_number
-
+        
+        
             randomNumberOne = int(answer) - random.randint(0,int(answer))
             randomNumberTwo = int(answer) + random.randint(0,int(answer))
+
+            if answer < 2:
+                Game_Questions.Questions()
 
             if randomNumberOne == answer:
                 randomNumberOne = int(answer) - random.randint(0,int(answer))
@@ -107,13 +114,20 @@ class Game_Questions:
                 first_number = second_number_store
                 second_number = first_number_store
 
-
             question = first_number, operator, second_number
             answer = first_number / second_number
 
             randomNumberOne = int(answer) - random.randint(0,int(answer))
             randomNumberTwo = int(answer) + random.randint(0,int(answer))
 
+            if answer < 2:
+                Game_Questions.Questions()
+
+
+            if answer.is_integer():
+                print("")
+            else:
+                Game_Questions.Questions()
 
             if randomNumberOne == answer:
                 randomNumberOne = int(answer) - random.randint(0,int(answer))
@@ -125,23 +139,14 @@ class Game_Questions:
 
         Game_Questions.AnswerDisplay()
 
-
-    #--------------------------------------MAKE THE OPERATOR CHANGE WHEN A NEW QUESITON IS MADE-------------------------------------------#
-
-
     def AnswerDisplay():
-        global question, answer, randomNumberOne, randomNumberTwo
+        global question, answer, randomNumberOne, randomNumberTwo, operator
 
         dict["canvas"] = canvas
-        canvas.delete('all')
+
+        question = first_number, operator, second_number
 
         answerList = []
-
-        answerList.append(int(answer))
-        answerList.append(int(randomNumberOne))
-        answerList.append(int(randomNumberTwo))
-
-        print(question)
 
 
         #Importing the image onto the canvas
@@ -151,44 +156,54 @@ class Game_Questions:
         CavnasImage.place(x = 0, y = 0)
 
 
-        if RandomLevel == BackImages[0]:
+        answerList.append(int(answer))
+        answerList.append(int(randomNumberOne))
+        answerList.append(int(randomNumberTwo))
+
+        randomListOne = answerList[random.randint(0,2)]
+        randomListTwo = answerList[random.randint(0,2)]
+
+
+        if RandomLevel == BackImages[3]:
             #Creates the buttons
-            answerOne = Button(root,text=answerList[random.randint(0,2)],font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("AnswerOne"))
-            answerTwo = Button(root,text=answerList[random.randint(0,2)],font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("AnswerTwo"))
-            answerThree = Button(root,text=answerList[random.randint(0,2)],font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("AnswerThree"))
+            answerOne = Button(root,text=answerList.pop(random.randint(0,2)),font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("Answer ="))
+            answerTwo = Button(root,text=answerList.pop(random.randint(0,1)),font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print(answer))
+
+            #ANSWER List = ANSWER
+            if answerList[0] == answer:
+                random.randrange(answerOne.config(text=answer), answerTwo.config(text=answer))
+        
+
+            operator = operator_list[random.randint(0,3)]
 
             #Displays the buttons
-            answerOne_canvas = canvas.create_window( 0, 0, anchor = "nw",window = answerOne)
-            answerTwo_canvas = canvas.create_window( 100, 100, anchor = "nw",window = answerTwo)
-            answerThree_canvas = canvas.create_window( 200, 200, anchor = "nw",window = answerThree)
+            answerOne_canvas = canvas.create_window( 75, 175, anchor = "nw",window = answerOne)
+            answerTwo_canvas = canvas.create_window( 635, 175, anchor = "nw",window = answerTwo)
 
             #Makes the Question Label
             question_label = Label(root, text = question, font="Times 35 bold",width = 7, height = 1, bg = 'purple')
             question_label.place(x=325,y=720)
-    
-        elif RandomLevel == BackImages[1]:
-            #Creates the buttons
-            answerOne = Button(root,text=answerList[random.randint(0,2)],font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("AnswerOne"))
-            answerTwo = Button(root,text=answerList[random.randint(0,2)],font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("AnswerTwo"))
-            answerThree = Button(root,text=answerList[random.randint(0,2)],font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("AnswerThree"))
 
-            #Displays the buttons
-            answerOne_canvas = canvas.create_window( 0, 0, anchor = "nw",window = answerOne)
-            answerTwo_canvas = canvas.create_window( 100, 100, anchor = "nw",window = answerTwo)
-            answerThree_canvas = canvas.create_window( 200, 200, anchor = "nw",window = answerThree)
 
-            #Makes the Question Label
-            question_label = Label(root, text = question, font="Times 35 bold",width = 7, height = 1, bg = 'purple')
-            question_label.place(x=325,y=720)
+            #Testing Button
+            testingButton = Button(root, text="TESING BUTTON!!!!", font = "Times 15 bold",width=20, height=1,bg='yellow', command=Game_Questions.Questions)
+            testingButtonCanvas = canvas.create_window(75, 580, anchor = "nw", window=testingButton)
     
-        elif RandomLevel == BackImages[2]:
+        elif RandomLevel == BackImages[4]:
             #Makes Buttons
-            answerOne = Button(root,text=answerList[random.randint(0,2)],font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print(" "))
-            answerTwo = Button(root,text=answerList[random.randint(0,2)],font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print(" "))
+            answerOne = Button(root,text=answerList.pop(random.randint(0,2)),font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print(answer))
+            answerTwo = Button(root,text=answerList.pop(random.randint(0,1)),font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("AnswerTwo"))
+
+            #ANSWER List = ANSWER
+            if answerList[0] == answer:
+                random.randrange(answerOne.config(text=answer), answerTwo.config(text=answer))
+            
+
+            operator = operator_list[random.randint(0,3)]
 
             #Displays the buttons
-            answerOne_canvas = canvas.create_window( 125, 50, anchor = "nw",window = answerOne)
-            answerTwo_canvas = canvas.create_window( 680, 200, anchor = "nw",window = answerTwo)
+            answerOne_canvas = canvas.create_window( 100, 250, anchor = "nw",window = answerOne)
+            answerTwo_canvas = canvas.create_window( 600, 250, anchor = "nw",window = answerTwo)
 
             #Makes the Question Label
             question_label = Label(root, text = question, font="Times 35 bold",width = 7, height = 1, bg = 'purple')
@@ -199,14 +214,38 @@ class Game_Questions:
 
             #Testing Button
             testingButton = Button(root, text="TESING BUTTON!!!!", font = "Times 15 bold",width=20, height=1,bg='yellow', command=Game_Questions.Questions)
-            testingButton_Canvas = canvas.create_window(100,600, anchor = "nw", window = testingButton)
+            testingButtonCanvas = canvas.create_window(75, 580, anchor = "nw", window=testingButton)
     
+        elif RandomLevel == BackImages[5]:
+            #Makes Buttons
+            answerOne = Button(root,text=answerList.pop(random.randint(0,2)),font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print(answer))
+            answerTwo = Button(root,text=answerList.pop(random.randint(0,1)),font="Times 18 bold",width = 7, height = 1, bg = 'red', highlightthickness = 0, bd = 0, command=print("AnswerTwo"))
+
+            #ANSWER List = ANSWER
+            if answerList[0] == answer:
+                random.randrange(answerOne.config(text=answer), answerTwo.config(text=answer))
+            
+
+            operator = operator_list[random.randint(0,3)]
+
+            #Displays the buttons
+            answerOne_canvas = canvas.create_window( 125, 50, anchor = "nw",window = answerOne)
+            answerTwo_canvas = canvas.create_window( 680, 200, anchor = "nw",window = answerTwo)
+
+            #Makes the Question Label
+            question_label = Label(root, text = question, font="Times 35 bold",width = 7, height = 1, bg = 'purple')
+            question_label.place(x=325,y=720)
 
 
+            #Testing Button
+            testingButton = Button(root, text="TESING BUTTON!!!!", font = "Times 15 bold",width=20, height=1,bg='yellow', command=Game_Questions.Questions)
+            testingButtonCanvas = canvas.create_window(75, 580, anchor = "nw", window=testingButton)
+
+
+        
 
         dict["canvas"].pack()
         root.mainloop()
-
 
 
         
