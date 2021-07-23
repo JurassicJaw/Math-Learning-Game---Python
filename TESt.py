@@ -1,19 +1,11 @@
-from PIL import Image
+import os
+name = 'THIS IS SO FUCKING BROKEN'
+score = '1241423614'
 
 
+dir = os.path.dirname(__file__) # Find the directory of the current file
+filename = os.path.join(dir, 'scores',str('Hard.csv').lower()) # Finds the csv file
+f = open(filename,'a') # opens the csv file
 
-TitleImage = Image.open("G:\My Drive\Classroom\CDT301\Python Assesment\Math Learning Game\Layouts\Images\Buttons\png\Title.png")
-TitleRGBA = TitleImage.convert("RGBA")
-TitleData = TitleRGBA.getdata()
-
-NewTitleData = []
-for item in TitleData:
-    if item[0] == 0 and item[1] == 0 and item[2] == 0:  # finding black colour by its RGB value
-        # storing a transparent value when we find a black colour
-        NewTitleData.append((255, 255, 255, 0))
-    else:
-        NewTitleData.append(item)  # other colours remain unchanged
-
-TitleRGBA.putdata(NewTitleData)
-TitleRGBA.save("transparent_image.png", "PNG")
-
+f.write("\n" + str(name) + ": " + str(score))
+f.close() # close the file
