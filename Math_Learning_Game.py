@@ -51,7 +51,6 @@ def readcsv(csvname):
   filename = os.path.join(dir, 'scores',str(csvname)) # Finds the csv file
   f = open(filename,'r') # opens the csv file
   num_lines = sum(1 for line in open(filename,'r'))
-  print("This file has",num_lines-1,"lines")
   line = f.readline()  # Skips the header line
 
 
@@ -261,15 +260,15 @@ class Game_Questions:
 
         if CheckAnswerTwo == answer:
             CurrentDiff = diff
-            diff = 0
             Correct = True
+            diff = 0
             score += 1
             Math_Game.StartGame()
-            
+
         if CheckAnswerTwo != answer:
             CurrentDiff = diff
-            diff = 0
             Wrong = True
+            diff = 0
             score -= 1
             Math_Game.StartGame()
 
@@ -279,6 +278,8 @@ class Game_Questions:
 
         dict["canvas"] = canvas
         canvas.delete('all')
+
+        score = 0
 
         question = first_number, operator, second_number
 
@@ -671,30 +672,36 @@ class Math_Game:
 
                     if CurrentDiff == 1:
 
+                        print("APPENDING SCORE TO THE CSV FILE")
                         dir = os.path.dirname(__file__) # Find the directory of the current file
                         filename = os.path.join(dir, 'scores',str('Easy.csv').lower()) # Finds the csv file
                         f = open(filename,'a') # opens the csv file
 
                         f.write("\n" + str(name) + ": " + str(score))
                         f.close() # close the file
+                        
                 
                     elif CurrentDiff == 2:
 
+                        print("APPENDING SCORE TO THE CSV FILE")
                         dir = os.path.dirname(__file__) # Find the directory of the current file
                         filename = os.path.join(dir, 'scores',str('Medium.csv').lower()) # Finds the csv file
                         f = open(filename,'a') # opens the csv file
 
                         f.write("\n" + str(name) + ": " + str(score))
                         f.close() # close the file
+                        
 
                     elif CurrentDiff == 3:
 
+                        print("APPENDING SCORE TO THE CSV FILE")
                         dir = os.path.dirname(__file__) # Find the directory of the current file
                         filename = os.path.join(dir, 'scores',str('Hard.csv').lower()) # Finds the csv file
                         f = open(filename,'a') # opens the csv file
 
                         f.write("\n" + str(name) + ": " + str(score))
                         f.close() # close the file
+                        
 
                         
 
@@ -819,9 +826,7 @@ class Math_Game:
             
 
         if Wrong == True:
-            print(s)
             s -=10
-            print(s)
             time_count = h,":", m,":", s
             timer_label.configure(text="")
             timer_label.configure(text=time_count)
@@ -834,6 +839,7 @@ class Math_Game:
 
 
         Game_Questions.Questions()
+
 
 
 def scoreInfo():
