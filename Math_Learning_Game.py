@@ -21,7 +21,7 @@ now = datetime.datetime.now()
 
 s = 0
 m = 0
-h = 0
+CurrentDiff = 0
 menuTimer = 4
 score = 0
 newScore = score
@@ -241,47 +241,41 @@ class Game_Questions:
 
 
     def answerOneCheck():
-        global answerList, answer, CheckAnswerOne, wrong, Correct, score, diff, CurrentDiff
+        global answerList, answer, CheckAnswerOne, wrong, Correct, score
 
         if CheckAnswerOne == answer:
-            CurrentDiff = diff
+        
             Correct = True
-            diff = 0
             score += 1
             Math_Game.StartGame()
 
         if CheckAnswerOne != answer:
-            CurrentDiff = diff
             Wrong = True
-            diff = 0
             score -= 1
             Math_Game.StartGame()
     
     def answerTwoCheck():
-        global answerList, answer, CheckAnswerTwo, Wrong, Correct, score, diff, CurrentDiff
+        global answerList, answer, CheckAnswerTwo, Wrong, Correct, score
 
         if CheckAnswerTwo == answer:
-            CurrentDiff = diff
             Correct = True
-            diff = 0
             score += 1
             Math_Game.StartGame()
 
         if CheckAnswerTwo != answer:
-            CurrentDiff = diff
             Wrong = True
-            diff = 0
             score -= 1
             Math_Game.StartGame()
 
 
     def AnswerDisplay():
-        global question, answer, randomNumberOne, randomNumberTwo, operator, CheckAnswerOne, CheckAnswerTwo
+        global question, answer, randomNumberOne, randomNumberTwo, operator, CheckAnswerOne, CheckAnswerTwo, CurrentDiff, diff
 
         dict["canvas"] = canvas
         canvas.delete('all')
 
         score = 0
+        CurrentDiff = diff
 
         question = first_number, operator, second_number
 
@@ -609,14 +603,14 @@ class Math_Game:
 
 
     def Timer():               #Starts And Stops The Timer
-        global s,m,h,timer,timer_label,time_count,BackGround,CavnasImage, score, menuTimer, newScore, diff, CurrentDiff
+        global s,m,timer,timer_label,time_count,BackGround,CavnasImage, score, menuTimer, newScore, diff, CurrentDiff
 
         #Makes the timer label
         timer_label = Label(root, text=" ", font=('Helvetica', 24), fg='black')
 
         if timer == True:
 
-            time_count = h,":", m,":", s
+            time_count = m,":", s
 
             #Displays the timer on the canvas
             timer_canvas = canvas.create_window( 663, 10, anchor = "nw",window = timer_label)
@@ -624,10 +618,16 @@ class Math_Game:
 
             #Updates the timer label
             timer_label.configure(text=time_count)
+            timer_label.place(x=675, y=10, width=100)
 
 
             #Minus 1 Every Second
             s -= 1
+
+            if s > 1 and m == 1 or s > 1 and m > 1:
+                s = 1
+                m = 1
+                timer_label.configure(text=time_count)
 
             #Seconds To Minutes
             if s > 59:
@@ -639,17 +639,6 @@ class Math_Game:
                 m-=1
                 s+=60
             
-            #Minutes To Hours
-            if m > 60 and s > 0:
-                s=0
-                m =0
-                h +=1
-
-            #Hours To Minutes
-            if h > 0 and m < 1 and s < 0:
-                h -= 1
-                m += 59
-                s = 59
 
             #No Time Left
             elif s < 0:
@@ -673,10 +662,9 @@ class Math_Game:
                     timer=False
                     ScoreText.destroy
                     
-                    print("Current Diff:" CurrentDiff)
                     if CurrentDiff == 1:
 
-                        print("APPENDING SCORE TO THE CSV FILE")
+                        diff = 0
                         dir = os.path.dirname(__file__) # Find the directory of the current file
                         filename = os.path.join(dir, 'scores',str('Easy.csv').lower()) # Finds the csv file
                         f = open(filename,'a') # opens the csv file
@@ -687,7 +675,7 @@ class Math_Game:
                 
                     elif CurrentDiff == 2:
 
-                        print("APPENDING SCORE TO THE CSV FILE")
+                        diff = 0
                         dir = os.path.dirname(__file__) # Find the directory of the current file
                         filename = os.path.join(dir, 'scores',str('Medium.csv').lower()) # Finds the csv file
                         f = open(filename,'a') # opens the csv file
@@ -698,7 +686,7 @@ class Math_Game:
 
                     elif CurrentDiff == 3:
 
-                        print("APPENDING SCORE TO THE CSV FILE")
+                        diff = 0
                         dir = os.path.dirname(__file__) # Find the directory of the current file
                         filename = os.path.join(dir, 'scores',str('Hard.csv').lower()) # Finds the csv file
                         f = open(filename,'a') # opens the csv file
@@ -722,7 +710,6 @@ class Math_Game:
         elif timer == False:
             s = 0
             m = 0
-            h = 0
 
             #Sets the timer to blank
             timer_label.configure(text=" ")
@@ -792,33 +779,30 @@ class Math_Game:
 
 
     def StartGame():           #Starts The Game
-        global diff, h, m, s, score, timer, timer_label, answers, Correct, Wrong, time_count
+        global diff, m, s, score, timer, timer_label, answers, Correct, Wrong, time_count
 
         if diff == 1:
             s = 31
             m = 0
-            h = 0
             Math_Game.TimerOn()
             Math_Game.Timer()
 
         elif diff == 2:
             s = 21
             m = 0
-            h = 0
             Math_Game.TimerOn()
             Math_Game.Timer()
 
         elif diff == 3:
             s = 11
             m = 0
-            h = 0
             Math_Game.TimerOn()
             Math_Game.Timer()
 
 
         if Correct == True:
             s += 5
-            time_count = h,":", m,":", s
+            time_count = m,":", s
             timer_label.configure(text="")
             timer_label.configure(text=time_count)
             Correct = False
@@ -831,7 +815,7 @@ class Math_Game:
 
         if Wrong == True:
             s -=10
-            time_count = h,":", m,":", s
+            time_count = m,":", s
             timer_label.configure(text="")
             timer_label.configure(text=time_count)
             Wrong = False
