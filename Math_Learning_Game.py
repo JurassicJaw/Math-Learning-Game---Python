@@ -18,6 +18,7 @@ StoryTimer = False
 
 now = datetime.datetime.now()
 
+
 s = 0
 m = 0
 h = 0
