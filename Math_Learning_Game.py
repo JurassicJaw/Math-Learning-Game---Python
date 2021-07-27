@@ -29,6 +29,7 @@ timer = False
 Wrong = False
 Correct = False
 name_grabbed = False
+named = False
 
 operator_list = []
 
@@ -504,15 +505,17 @@ class Math_Game:
         Quit_canvas = canvas.create_window( 315, 600, anchor = "nw",window = Quit)
 
         dict["canvas"].pack()
-        Math_Game.NamePopUp()
+        if named == False:
+            Math_Game.NamePopUp()
         root.mainloop()   
 
 
     
     def NamePopUp():
-        global NameEntry, Name_Var
+        global NameEntry, Name_Var, named
         
         
+        named = True
         canvas = Canvas(PopUp, width=300, height=150, bg = 'grey25')
     
 
@@ -670,7 +673,7 @@ class Math_Game:
                     timer=False
                     ScoreText.destroy
                     
-
+                    print("Current Diff:" CurrentDiff)
                     if CurrentDiff == 1:
 
                         print("APPENDING SCORE TO THE CSV FILE")
