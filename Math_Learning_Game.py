@@ -24,12 +24,16 @@ m = 0
 CurrentDiff = 0
 menuTimer = 4
 score = 0
+gameStart = 0
+
 newScore = score
+
 timer = False
 Wrong = False
 Correct = False
 name_grabbed = False
 named = False
+diffLock = False
 
 operator_list = []
 
@@ -87,7 +91,7 @@ def button_image(image):
 
 
 
-
+#Holds all the components for the questions
 class Game_Questions:
 
 
@@ -269,10 +273,14 @@ class Game_Questions:
 
 
     def AnswerDisplay():
-        global question, answer, randomNumberOne, randomNumberTwo, operator, CheckAnswerOne, CheckAnswerTwo, CurrentDiff, diff
+        global question, answer, randomNumberOne, randomNumberTwo, operator, CheckAnswerOne, CheckAnswerTwo, CurrentDiff, diff, gameStart
 
         dict["canvas"] = canvas
-        canvas.delete('all')
+        diff = 0
+
+        if gameStart == 2:
+            canvas.delete('all')
+            gameStart = 0
 
         score = 0
         CurrentDiff = diff
@@ -457,7 +465,7 @@ class Game_Questions:
         root.mainloop()
 
 
-
+#Holds all the components for the math game
 class Math_Game:
 
     def Exit():                 #Quits The Game
@@ -603,7 +611,7 @@ class Math_Game:
 
 
     def Timer():               #Starts And Stops The Timer
-        global s,m,timer,timer_label,time_count,BackGround,CavnasImage, score, menuTimer, newScore, diff, CurrentDiff
+        global s,m,timer,timer_label,time_count,BackGround,CavnasImage, score, menuTimer, newScore, diff, CurrentDiff, diffLock
 
         #Makes the timer label
         timer_label = Label(root, text=" ", font=('Helvetica', 24), fg='black')
@@ -611,6 +619,17 @@ class Math_Game:
         if timer == True:
 
             time_count = m,":", s
+
+            diffLock = True
+
+            if diffLock == True:
+                
+                if diff == 0:
+                    diff = CurrentDiff
+                elif CurrentDiff != diff:
+                    CurrentDiff = diff
+
+                diffLock = False                
 
             #Displays the timer on the canvas
             timer_canvas = canvas.create_window( 663, 10, anchor = "nw",window = timer_label)
@@ -624,20 +643,14 @@ class Math_Game:
             #Minus 1 Every Second
             s -= 1
 
-            if s > 1 and m == 1 or s > 1 and m > 1:
-                s = 1
-                m = 1
-                timer_label.configure(text=time_count)
-
-            #Seconds To Minutes
+            #Capps time at 1 minute
             if s > 59:
-                s -=59
-                m += 1
+                s = 0
+                m = 1
             
-            #Minutes To Seconds
-            if m > 0 and s < 0:
-                m-=1
-                s+=60
+            if m == 1 and s == 0:
+                s = 59
+                m = 0
             
 
             #No Time Left
@@ -726,10 +739,12 @@ class Math_Game:
 
 
     def StoryMenu():            #Loads Up The Story Menu
-        global StoryTimer, StoryTimerSeconds
+        global StoryTimer, StoryTimerSeconds, gameStart
         dict["canvas"] = canvas
         canvas.delete('all')
         StoryTimer = True
+
+        gameStart = 2
 
         #Importing the image onto the canvas
         BackGround = game_image('Story.ppm')
@@ -800,32 +815,35 @@ class Math_Game:
             Math_Game.Timer()
 
 
+
         if Correct == True:
             s += 5
             time_count = m,":", s
-            timer_label.configure(text="")
-            timer_label.configure(text=time_count)
             Correct = False
-            if s > 59:
-                s -=59
-                m += 1
-                timer_label.configure(text="")
-                timer_label.configure(text=time_count)
-            
 
+            #Capps time at 1 minute
+            if s > 59:
+                s = 0
+                m = 1
+            
+            if m == 1 and s == 0:
+                s = 59
+                m = 0
+            
         if Wrong == True:
             s -=10
             time_count = m,":", s
-            timer_label.configure(text="")
-            timer_label.configure(text=time_count)
             Wrong = False
-            if m > 0 and s < 0:
-                m-=1
-                s+=60
-                timer_label.configure(text="")
-                timer_label.configure(text=time_count)
+            #Capps time at 1 minute
+            if s > 59:
+                s = 0
+                m = 1
+            
+            if m == 1 and s == 0:
+                s = 59
+                m = 0
 
-
+        
         Game_Questions.Questions()
 
 
