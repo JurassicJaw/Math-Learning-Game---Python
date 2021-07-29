@@ -630,6 +630,7 @@ class Math_Game:
                 elif CurrentDiff != diff:
                     print(diff, "THIS IS THE DIFFICULTY IF THE CURRENT DIF != DIFF")
                     CurrentDiff = diff
+                    diff = 4
 
                 diffLock = False                
 
@@ -798,7 +799,7 @@ class Math_Game:
 
 
     def StartGame():           #Starts The Game
-        global diff, m, s, score, timer, timer_label, answers, Correct, Wrong, time_count
+        global diff, m, s, score, answers, Correct, Wrong
 
         if diff == 1:
             s = 31
@@ -822,9 +823,7 @@ class Math_Game:
 
         if Correct == True:
             s += 5
-            time_count = m,":", s
             Correct = False
-
             #Capps time at 1 minute
             if s > 59:
                 s = 0
@@ -836,7 +835,6 @@ class Math_Game:
             
         if Wrong == True:
             s -=10
-            time_count = m,":", s
             Wrong = False
             #Capps time at 1 minute
             if s > 59:
