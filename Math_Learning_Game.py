@@ -276,13 +276,13 @@ class Game_Questions:
         global question, answer, randomNumberOne, randomNumberTwo, operator, CheckAnswerOne, CheckAnswerTwo, CurrentDiff, diff, gameStart
 
         dict["canvas"] = canvas
-        diff = 0
 
         if gameStart == 2:
             canvas.delete('all')
             gameStart = 0
 
         score = 0
+        print(diff, "THIS IS THE DIFFICULTY ON ANSWER DISPLAY")
         CurrentDiff = diff
 
         question = first_number, operator, second_number
@@ -626,7 +626,9 @@ class Math_Game:
                 
                 if diff == 0:
                     diff = CurrentDiff
+                
                 elif CurrentDiff != diff:
+                    print(diff, "THIS IS THE DIFFICULTY IF THE CURRENT DIF != DIFF")
                     CurrentDiff = diff
 
                 diffLock = False                
@@ -670,6 +672,8 @@ class Math_Game:
                 newScore = score
 
                 menuTimer -=1
+
+                print(CurrentDiff, "THIS IS THE DIFF AT THE END OF THE GAME")
 
                 if menuTimer < 0:
                     timer=False
